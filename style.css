@@ -598,10 +598,70 @@ body {
 }
 
 /* ── Responsive ── */
-@media (max-width: 520px) {
-  .section-card { flex-wrap: wrap; }
-  .play-btn     { width: 100%; justify-content: center; }
-  .vol-buttons  { flex-direction: column; }
+@media (max-width: 680px) {
+  .container {
+    padding: 16px 12px 32px;
+  }
+  .header {
+    padding: 20px 10px;
+    margin-bottom: 24px;
+  }
+  .shield-icon {
+    font-size: 3rem;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+  }
+  .sfx-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .sfx-btn {
+    max-width: 100%;
+    min-width: 0;
+    padding: 10px 6px;
+  }
+  .vol-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .vol-stop-all {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .section-info {
+    text-align: center;
+  }
+  .section-icon {
+    align-self: center;
+    font-size: 2rem;
+  }
+  .play-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+  .sfx-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .vol-buttons {
+    grid-template-columns: 1fr;
+  }
+  .vol-stop-all {
+    grid-column: auto;
+  }
 }
 
 /* ── Fade in general ── */
@@ -609,12 +669,13 @@ body {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.section-card, .volume-controls, .now-playing {
+.section-card, .volume-controls, .now-playing, .sfx-controls {
   animation: fade-in 0.5s ease both;
 }
 .section-card:nth-child(1) { animation-delay: 0.05s; }
 .section-card:nth-child(2) { animation-delay: 0.12s; }
 .section-card:nth-child(3) { animation-delay: 0.19s; }
 .section-card:nth-child(4) { animation-delay: 0.26s; }
-.volume-controls            { animation-delay: 0.35s; }
-.now-playing                { animation-delay: 0.42s; }
+.volume-controls            { animation-delay: 0.32s; }
+.sfx-controls               { animation-delay: 0.38s; }
+.now-playing                { animation-delay: 0.44s; }
