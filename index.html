@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>⚔️ Alianza Vikinga — Musicalización</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Partículas de fondo -->
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="shield-icon">🛡️</div>
+      <h1>Alianza Vikinga</h1>
+      <p class="subtitle">La historia que despertó al norte</p>
+    </header>
+
+    <!-- Secciones musicales -->
+    <main class="sections">
+
+      <div class="section-card" id="card-1">
+        <div class="section-icon">🌿</div>
+        <div class="section-info">
+          <h2>Música Mitológica</h2>
+          <p>Yggdrasil · Odín · Thor · Los nueve mundos</p>
+        </div>
+        <button class="play-btn" data-track="1" aria-label="Reproducir música mitológica">
+          <span class="btn-icon">▶</span>
+          <span class="btn-label">Reproducir</span>
+        </button>
+      </div>
+
+      <div class="section-card" id="card-2">
+        <div class="section-icon">⚓</div>
+        <div class="section-info">
+          <h2>Música Histórica</h2>
+          <p>Erik el Rojo · Leif Erikson · Vinland</p>
+        </div>
+        <button class="play-btn" data-track="2" aria-label="Reproducir música histórica">
+          <span class="btn-icon">▶</span>
+          <span class="btn-label">Reproducir</span>
+        </button>
+      </div>
+
+      <div class="section-card" id="card-3">
+        <div class="section-icon">🐉</div>
+        <div class="section-info">
+          <h2>Música de Dragones</h2>
+          <p>Furia Nocturna · Furia Luminosa · El vuelo</p>
+        </div>
+        <button class="play-btn" data-track="3" aria-label="Reproducir música de dragones">
+          <span class="btn-icon">▶</span>
+          <span class="btn-label">Reproducir</span>
+        </button>
+      </div>
+
+      <div class="section-card" id="card-4">
+        <div class="section-icon">👑</div>
+        <div class="section-info">
+          <h2>Entrada de los Reyes</h2>
+          <p>Rey Iñaki · Reina Josefa · 185 años</p>
+        </div>
+        <button class="play-btn" data-track="4" aria-label="Reproducir entrada de los reyes">
+          <span class="btn-icon">▶</span>
+          <span class="btn-label">Reproducir</span>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Controles de volumen -->
+    <section class="volume-controls" aria-label="Controles de volumen">
+      <h3>🎚️ Volumen</h3>
+      <div class="vol-buttons">
+        <button class="vol-btn vol-max" id="btn-max" aria-label="Volumen máximo">
+          <span class="vol-icon">🔊</span>
+          <span>Máximo</span>
+        </button>
+        <button class="vol-btn vol-low" id="btn-low" aria-label="Volumen bajo de fondo">
+          <span class="vol-icon">🔉</span>
+          <span>Fondo</span>
+        </button>
+        <button class="vol-btn vol-mute" id="btn-mute" aria-label="Silencio">
+          <span class="vol-icon">🔇</span>
+          <span>Silencio</span>
+        </button>
+      </div>
+      <!-- Slider manual -->
+      <div class="slider-container">
+        <input type="range" id="vol-slider" min="0" max="100" value="80" aria-label="Control deslizante de volumen" />
+        <span id="vol-percent">80%</span>
+      </div>
+    </section>
+
+    <!-- Now playing -->
+    <div class="now-playing" id="now-playing" aria-live="polite">
+      <div class="np-inner">
+        <span class="np-icon" id="np-icon">🎵</span>
+        <div class="np-text">
+          <span class="np-label">Esperando...</span>
+          <span class="np-track" id="np-track">Selecciona una sección para comenzar</span>
+        </div>
+        <div class="np-bars" id="np-bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>⚔️ Colegio de los Sagrados Corazones · 185 años · ¡Que despierte la Alianza Vikinga! ⚔️</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
