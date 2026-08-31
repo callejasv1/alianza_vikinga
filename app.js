@@ -73,6 +73,8 @@ const volPercent   = document.getElementById('vol-percent');
 const btnMax       = document.getElementById('btn-max');
 const btnLow       = document.getElementById('btn-low');
 const btnMute      = document.getElementById('btn-mute');
+const btnStopMusic = document.getElementById('btn-stop-music');
+const btnStopAll   = document.getElementById('btn-stop-all');
 const sfxSlider    = document.getElementById('sfx-slider');
 const sfxPercent   = document.getElementById('sfx-percent');
 
@@ -125,18 +127,41 @@ function handleTrackClick(trackNum) {
   playSwitchTo(trackNum);
 }
 
+function stopAllMusic() {
+  clearInterval(fadeTimer);
+  // Detener todos los audios en caché para evitar cualquier solapamiento
+  Object.keys(audioCache).forEach(k => {
+    const a = audioCache[k];
+    if (a) {
+      a.pause();
+      a.currentTime = 0;
+    }
+  });
+  if (currentTrack) {
+    clearActiveState(currentTrack);
+    currentTrack = null;
+  }
+  currentAudio = null;
+  npBars.classList.remove('playing');
+  const label = nowPlayingEl.querySelector('.np-label');
+  if (label && !currentSfxAudio) label.textContent = 'Esperando...';
+  if (!currentSfxAudio) {
+    npIcon.textContent = '🎵';
+    npTrack.textContent = 'Selecciona una sección para comenzar';
+  }
+}
+
+function stopAll() {
+  stopAllMusic();
+  stopSfx();
+}
+
 function playSwitchTo(trackNum) {
   const track = TRACKS[trackNum];
   if (!track) return;
 
-  // Fade out de la pista anterior
-  if (currentAudio && !currentAudio.paused) {
-    const prevAudio = currentAudio;
-    fadeOut(prevAudio, () => { prevAudio.pause(); prevAudio.currentTime = 0; });
-  }
-
-  // Desmarcar tarjeta y botón anterior
-  if (currentTrack) clearActiveState(currentTrack);
+  // 1. Detener absolutamente toda música anterior al instante
+  stopAllMusic();
 
   currentTrack = trackNum;
 
@@ -153,13 +178,15 @@ function playSwitchTo(trackNum) {
   }
 
   currentAudio = audioCache[trackNum];
-  currentAudio.volume = 0;
+  currentAudio.volume = isMuted ? 0 : targetVolume;
   currentAudio.currentTime = 0;
 
   const playPromise = currentAudio.play();
   if (playPromise !== undefined) {
     playPromise
-      .then(() => fadeIn(currentAudio, isMuted ? 0 : targetVolume))
+      .then(() => {
+        fadeIn(currentAudio, isMuted ? 0 : targetVolume);
+      })
       .catch(err => {
         console.warn('Playback failed:', err);
         showError(trackNum);
@@ -173,7 +200,8 @@ function playSwitchTo(trackNum) {
 
 function pauseCurrent() {
   if (!currentAudio) return;
-  fadeOut(currentAudio, () => currentAudio.pause());
+  clearInterval(fadeTimer);
+  currentAudio.pause();
   updatePlayBtn(currentTrack, false);
   npBars.classList.remove('playing');
 }
@@ -193,24 +221,32 @@ function resumeCurrent() {
 // ── Fade in / out ──
 function fadeIn(audio, toVolume) {
   clearInterval(fadeTimer);
+  if (toVolume <= 0) {
+    audio.volume = 0;
+    return;
+  }
   const step = toVolume / FADE_STEPS;
   let v = 0;
   audio.volume = 0;
   fadeTimer = setInterval(() => {
     v = Math.min(v + step, toVolume);
-    audio.volume = v;
+    if (audio) audio.volume = v;
     if (v >= toVolume) clearInterval(fadeTimer);
   }, FADE_MS / FADE_STEPS);
 }
 
 function fadeOut(audio, onDone) {
   clearInterval(fadeTimer);
+  if (!audio) {
+    if (onDone) onDone();
+    return;
+  }
   const startV = audio.volume;
   const step = startV / FADE_STEPS;
   let v = startV;
   fadeTimer = setInterval(() => {
     v = Math.max(v - step, 0);
-    audio.volume = v;
+    if (audio) audio.volume = v;
     if (v <= 0) {
       clearInterval(fadeTimer);
       if (onDone) onDone();
@@ -278,6 +314,8 @@ function initVolumeControls() {
   btnMax.addEventListener('click', () => setVolumePreset(VOL_MAX,  'max'));
   btnLow.addEventListener('click', () => setVolumePreset(VOL_LOW,  'low'));
   btnMute.addEventListener('click', toggleMute);
+  if (btnStopMusic) btnStopMusic.addEventListener('click', stopAllMusic);
+  if (btnStopAll) btnStopAll.addEventListener('click', stopAll);
 
   volSlider.addEventListener('input', () => {
     const val = parseInt(volSlider.value, 10);

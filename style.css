@@ -298,6 +298,20 @@ body {
   box-shadow: 0 0 12px rgba(255,80,80,0.3);
 }
 
+.vol-stop-music:hover {
+  background: rgba(232,128,26,0.18);
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+  box-shadow: 0 0 12px rgba(232,128,26,0.35);
+}
+
+.vol-stop-all:hover {
+  background: rgba(255,50,50,0.2);
+  border-color: #ff3333;
+  color: #ff6666;
+  box-shadow: 0 0 14px rgba(255,50,50,0.4);
+}
+
 /* Slider */
 .slider-container {
   display: flex;
