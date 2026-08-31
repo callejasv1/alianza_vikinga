@@ -96,6 +96,48 @@
       </div>
     </section>
 
+    <!-- Efectos de sonido -->
+    <section class="sfx-controls" aria-label="Efectos de sonido">
+      <div class="sfx-header">
+        <h3>⚡ Efectos</h3>
+        <button class="sfx-stop-btn" id="sfx-stop" title="Detener efecto" aria-label="Detener efecto de sonido">
+          <span>⏹ Stop</span>
+        </button>
+      </div>
+      <div class="sfx-grid">
+        <button class="sfx-btn" data-sfx="thunder" title="Trueno de Thor">
+          <span class="sfx-icon">⚡</span>
+          <span>Trueno</span>
+        </button>
+        <button class="sfx-btn" data-sfx="horn" title="Cuerno vikingo nórdico">
+          <span class="sfx-icon">📯</span>
+          <span>Cuerno</span>
+        </button>
+        <button class="sfx-btn" data-sfx="raven" title="Cuervo de Odín">
+          <span class="sfx-icon">🪶</span>
+          <span>Cuervo</span>
+        </button>
+        <button class="sfx-btn" data-sfx="sword" title="Choque de espadas">
+          <span class="sfx-icon">⚔️</span>
+          <span>Espadas</span>
+        </button>
+        <button class="sfx-btn" data-sfx="wave" title="Ola del mar nórdico">
+          <span class="sfx-icon">🌊</span>
+          <span>Ola</span>
+        </button>
+        <button class="sfx-btn" data-sfx="dragon_roar" title="Rugido de dragón">
+          <span class="sfx-icon">🐉</span>
+          <span>Dragón</span>
+        </button>
+      </div>
+      <!-- Volumen de efectos independiente -->
+      <div class="sfx-vol-row">
+        <label for="sfx-slider" class="sfx-vol-label">🔔 Vol. efectos</label>
+        <input type="range" id="sfx-slider" min="0" max="100" value="55" aria-label="Volumen de efectos de sonido" />
+        <span id="sfx-percent">55%</span>
+      </div>
+    </section>
+
     <!-- Now playing -->
     <div class="now-playing" id="now-playing" aria-live="polite">
       <div class="np-inner">

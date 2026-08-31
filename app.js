@@ -36,6 +36,18 @@ const TRACKS = {
   }
 };
 
+// ── Efectos de sonido ──
+const SFX = {
+  thunder:    { file: 'sfx/thunder.mp3',    label: '⚡ Trueno' },
+  horn:       { file: 'sfx/horn.mp3',       label: '📯 Cuerno vikingo' },
+  raven:      { file: 'sfx/raven.mp3',      label: '🪶 Cuervo de Odín' },
+  sword:      { file: 'sfx/sword.mp3',      label: '⚔️ Espadas' },
+  wave:       { file: 'sfx/wave.mp3',       label: '🌊 Ola del mar' },
+  dragon_roar:{ file: 'sfx/dragon_roar.mp3',label: '🐉 Rugido de dragón' }
+};
+let currentSfxAudio  = null;   // SFX activo en este momento (solo uno a la vez)
+let currentSfxBtn    = null;   // botón SFX activo
+
 // Presets de volumen
 const VOL_MAX  = 1.0;
 const VOL_LOW  = 0.15;   // volumen fondo (narrador habla encima)
@@ -47,7 +59,8 @@ let currentTrack = null;   // número de pista activa (1-4) o null
 let currentAudio = null;   // objeto Audio activo
 let audioCache   = {};     // cache de objetos Audio por número
 let isMuted      = false;
-let targetVolume = 0.80;   // volumen objetivo actual
+let targetVolume = 0.80;   // volumen objetivo música
+let sfxVolume    = 0.50;   // volumen objetivo efectos (independiente)
 let fadeTimer    = null;
 
 // ── DOM refs ──
@@ -60,12 +73,15 @@ const volPercent   = document.getElementById('vol-percent');
 const btnMax       = document.getElementById('btn-max');
 const btnLow       = document.getElementById('btn-low');
 const btnMute      = document.getElementById('btn-mute');
+const sfxSlider    = document.getElementById('sfx-slider');
+const sfxPercent   = document.getElementById('sfx-percent');
 
 // ── Inicialización ──
 document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   initPlayButtons();
   initVolumeControls();
+  initSfxButtons();
   updateSliderTrack(volSlider.value);
 });
 
@@ -333,4 +349,100 @@ function updateVolPercent(val) {
 
 function clearVolBtnActive() {
   [btnMax, btnLow, btnMute].forEach(b => b.classList.remove('active'));
+}
+
+// ── Efectos de sonido ──
+function initSfxButtons() {
+  // Botones de efectos
+  document.querySelectorAll('.sfx-btn').forEach(btn => {
+    btn.addEventListener('click', () => playSfx(btn.dataset.sfx, btn));
+  });
+
+  // Botón de stop
+  const stopBtn = document.getElementById('sfx-stop');
+  if (stopBtn) stopBtn.addEventListener('click', stopSfx);
+
+  // Slider de volumen de efectos
+  if (sfxSlider) {
+    sfxSlider.addEventListener('input', () => {
+      sfxVolume = parseInt(sfxSlider.value, 10) / 100;
+      sfxPercent.textContent = sfxSlider.value + '%';
+      updateSfxSliderTrack(sfxSlider.value);
+      // Actualizar volumen del efecto si está sonando
+      if (currentSfxAudio) currentSfxAudio.volume = isMuted ? 0 : sfxVolume;
+    });
+    updateSfxSliderTrack(sfxSlider.value);
+  }
+}
+
+function stopSfx() {
+  if (currentSfxAudio) {
+    currentSfxAudio.pause();
+    currentSfxAudio.currentTime = 0;
+    currentSfxAudio = null;
+  }
+  // Quitar clase activa del botón
+  if (currentSfxBtn) {
+    currentSfxBtn.classList.remove('sfx-active');
+    currentSfxBtn = null;
+  }
+  // Restaurar label
+  const label = nowPlayingEl.querySelector('.np-label');
+  if (label) label.textContent = currentTrack ? '♪ Reproduciendo' : 'Esperando...';
+
+  // Apagar indicador del stop button
+  const stopBtn = document.getElementById('sfx-stop');
+  if (stopBtn) stopBtn.classList.remove('active');
+}
+
+function playSfx(key, btn) {
+  const sfx = SFX[key];
+  if (!sfx) return;
+
+  // Detener el efecto anterior (solo uno a la vez)
+  stopSfx();
+
+  const audio = new Audio(sfx.file);
+  audio.volume = isMuted ? 0 : sfxVolume;
+  currentSfxAudio = audio;
+  currentSfxBtn   = btn || null;
+
+  // Cuando termina naturalmente → limpiar estado
+  audio.addEventListener('ended', () => {
+    if (currentSfxAudio === audio) stopSfx();
+  });
+
+  audio.addEventListener('error', () => {
+    console.warn('SFX no disponible:', sfx.file);
+    if (currentSfxAudio === audio) stopSfx();
+  });
+
+  audio.play().catch(err => {
+    console.warn('No se pudo reproducir SFX:', key, err);
+    if (currentSfxAudio === audio) stopSfx();
+  });
+
+  // Marcar botón activo
+  if (btn) {
+    btn.classList.add('sfx-active');
+    btn.classList.remove('firing');
+    void btn.offsetWidth;
+    btn.classList.add('firing');
+    setTimeout(() => btn.classList.remove('firing'), 600);
+  }
+
+  // Activar stop button visual
+  const stopBtn = document.getElementById('sfx-stop');
+  if (stopBtn) stopBtn.classList.add('active');
+
+  // Mostrar en now-playing
+  const label = nowPlayingEl.querySelector('.np-label');
+  if (label) label.textContent = '⚡ Efecto — ' + sfx.label;
+}
+
+function updateSfxSliderTrack(val) {
+  if (sfxSlider) {
+    sfxSlider.style.background =
+      `linear-gradient(to right, #6496ff ${val}%, rgba(255,255,255,0.1) ${val}%)`;
+  }
 }
