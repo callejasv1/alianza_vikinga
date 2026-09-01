@@ -29,6 +29,8 @@
   --c4: #c9a227; /* oro reyes */
   --c5: #e85d04; /* fuego / lamine yamal */
   --c6: #9d4edd; /* púrpura metal / iron man */
+  --c7: #00b4d8; /* azul celeste / haaland */
+  --c8: #2a9d8f; /* verde mar vikingo / remo */
 }
 
 /* Reset y base */
@@ -154,6 +156,8 @@ body {
 #card-4::before { background: var(--c4); }
 #card-5::before { background: var(--c5); }
 #card-6::before { background: var(--c6); }
+#card-7::before { background: var(--c7); }
+#card-8::before { background: var(--c8); }
 
 .section-card:hover {
   background: var(--bg-card-h);
@@ -682,6 +686,8 @@ body {
 .section-card:nth-child(4) { animation-delay: 0.26s; }
 .section-card:nth-child(5) { animation-delay: 0.31s; }
 .section-card:nth-child(6) { animation-delay: 0.35s; }
-.volume-controls            { animation-delay: 0.39s; }
-.sfx-controls               { animation-delay: 0.44s; }
-.now-playing                { animation-delay: 0.50s; }
+.section-card:nth-child(7) { animation-delay: 0.39s; }
+.section-card:nth-child(8) { animation-delay: 0.43s; }
+.volume-controls            { animation-delay: 0.47s; }
+.sfx-controls               { animation-delay: 0.52s; }
+.now-playing                { animation-delay: 0.58s; }

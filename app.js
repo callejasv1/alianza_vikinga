@@ -47,6 +47,20 @@ const TRACKS = {
     detail:  'Black Sabbath',
     icon:    '🎸',
     cardId:  'card-6'
+  },
+  7: {
+    file:    'audio/haaland.mp3',
+    name:    'Haaland – The Viking King',
+    detail:  'Erling Haaland · Himno Vikingo',
+    icon:    '⚽',
+    cardId:  'card-7'
+  },
+  8: {
+    file:    'audio/remo_vikingo.mp3',
+    name:    'El Remo Vikingo',
+    detail:  'Canto de Batalla',
+    icon:    '🛶',
+    cardId:  'card-8'
   }
 };
 
