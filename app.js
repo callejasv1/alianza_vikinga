@@ -40,6 +40,13 @@ const TRACKS = {
     detail:  'Y QUE FUE · Don Miguelo',
     icon:    '🔥',
     cardId:  'card-5'
+  },
+  6: {
+    file:    'audio/iron_man.mp3',
+    name:    'Iron Man',
+    detail:  'Black Sabbath',
+    icon:    '🎸',
+    cardId:  'card-6'
   }
 };
 

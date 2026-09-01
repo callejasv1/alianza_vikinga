@@ -28,6 +28,7 @@
   --c3: #a84b2f; /* rojo dragones */
   --c4: #c9a227; /* oro reyes */
   --c5: #e85d04; /* fuego / lamine yamal */
+  --c6: #9d4edd; /* púrpura metal / iron man */
 }
 
 /* Reset y base */
@@ -152,6 +153,7 @@ body {
 #card-3::before { background: var(--c3); }
 #card-4::before { background: var(--c4); }
 #card-5::before { background: var(--c5); }
+#card-6::before { background: var(--c6); }
 
 .section-card:hover {
   background: var(--bg-card-h);
@@ -679,6 +681,7 @@ body {
 .section-card:nth-child(3) { animation-delay: 0.19s; }
 .section-card:nth-child(4) { animation-delay: 0.26s; }
 .section-card:nth-child(5) { animation-delay: 0.31s; }
-.volume-controls            { animation-delay: 0.36s; }
-.sfx-controls               { animation-delay: 0.42s; }
-.now-playing                { animation-delay: 0.48s; }
+.section-card:nth-child(6) { animation-delay: 0.35s; }
+.volume-controls            { animation-delay: 0.39s; }
+.sfx-controls               { animation-delay: 0.44s; }
+.now-playing                { animation-delay: 0.50s; }
