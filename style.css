@@ -27,6 +27,7 @@
   --c2: #3d7ab5; /* azul histórico */
   --c3: #a84b2f; /* rojo dragones */
   --c4: #c9a227; /* oro reyes */
+  --c5: #e85d04; /* fuego / lamine yamal */
 }
 
 /* Reset y base */
@@ -150,6 +151,7 @@ body {
 #card-2::before { background: var(--c2); }
 #card-3::before { background: var(--c3); }
 #card-4::before { background: var(--c4); }
+#card-5::before { background: var(--c5); }
 
 .section-card:hover {
   background: var(--bg-card-h);
@@ -676,6 +678,7 @@ body {
 .section-card:nth-child(2) { animation-delay: 0.12s; }
 .section-card:nth-child(3) { animation-delay: 0.19s; }
 .section-card:nth-child(4) { animation-delay: 0.26s; }
-.volume-controls            { animation-delay: 0.32s; }
-.sfx-controls               { animation-delay: 0.38s; }
-.now-playing                { animation-delay: 0.44s; }
+.section-card:nth-child(5) { animation-delay: 0.31s; }
+.volume-controls            { animation-delay: 0.36s; }
+.sfx-controls               { animation-delay: 0.42s; }
+.now-playing                { animation-delay: 0.48s; }

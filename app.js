@@ -33,6 +33,13 @@ const TRACKS = {
     detail:  'Rey Iñaki · Reina Josefa',
     icon:    '👑',
     cardId:  'card-4'
+  },
+  5: {
+    file:    'audio/lamine_yamal.mp3',
+    name:    'Lamine Yamal',
+    detail:  'Y QUE FUE · Don Miguelo',
+    icon:    '🔥',
+    cardId:  'card-5'
   }
 };
 
